@@ -9,7 +9,8 @@ export default {
             price: 20,
             seller: 'Josephine K.',
             rating: 4.5,
-            numReviews: 10
+            numReviews: 10,
+            countInStock: 10
         },
         {
             _id:'2',
@@ -19,7 +20,8 @@ export default {
             price: 100,
             seller: 'Nick Reeves',
             rating: 5,
-            numReviews: 20
+            numReviews: 20,
+            countInStock: 50
         },
         {
             _id:'3',
@@ -29,7 +31,8 @@ export default {
             price: 60,
             seller: 'Maria\'s Shop',
             rating: 4,
-            numReviews: 5
+            numReviews: 5,
+            countInStock: 30
         },
         {
             _id:'4',
@@ -39,7 +42,8 @@ export default {
             price: 10,
             seller: 'Chris Smith',
             rating: 4,
-            numReviews: 30
+            numReviews: 30,
+            countInStock: 5
         }
     ]
 }
