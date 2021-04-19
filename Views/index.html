@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel = "stylesheet" href="CSS\style.css"/>
+        <title>
+            CreARTivity
+        </title>
+        <body>
+            <div class = "grid-container">
+            <header class="header">
+                <div class ="brand">
+                    <button onClick="openMenu()">
+                        &#9776;
+                    </button>
+                    <a href="index.html">CreARTivity</a>
+                </div>
+                <div class="header-links">
+                    <a href="cart.html">Cart</a>
+                    <a href="signin">Sign In</a>
+                </div>
+            </header>
+            <aside class ="sidebar">
+                <h3>Categories</h3>
+                <button class ="sidebar-close-button" onclick="closeMenu()">
+                    X
+                </button>
+                <ul class="categories">
+                    <li>
+                        <a href="index.html">
+                            Crafts
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html">
+                            Paintings
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html">
+                            Engravings
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html">
+                            Sculptures
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html">
+                            Miscellaneous
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+            <aside>
+             <h3> Shopping Categories</h3>   
+            </aside>
+            <main class = "main">
+                <div class="content">
+                <ul class="products">
+                    <li>
+                        <div class="product">
+                            <img class = "product-image" src="images/d1.jpg" alt="product">
+                            <div class ="product-name"> 
+                                <a href ="product.html">
+                                    Hand-painted "Starry Night"
+                                </a>
+                            </div>
+                            <div class ="product-seller">Josephine R.</div>
+                            <div class ="product-price">20$</div>
+                            <div class ="product-rating">4.5 Stars (10 reviews)</div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="product">
+                            <img class = "product-image" src="images/d1.jpg" alt="product">
+                            <div class ="product-name"> 
+                                <a href ="product.html">
+                                    Hand-painted "Starry Night"
+                                </a>
+                            </div>
+                            <div class ="product-seller">Josephine R.</div>
+                            <div class ="product-price">20$</div>
+                            <div class ="product-rating">4.5 Stars (10 reviews)</div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="product">
+                            <img class = "product-image" src="images/d1.jpg" alt="product">
+                            <div class ="product-name"> 
+                                <a href ="product.html">
+                                    Hand-painted "Starry Night"
+                                </a>
+                            </div>
+                            <div class ="product-seller">Josephine R.</div>
+                            <div class ="product-price">20$</div>
+                            <div class ="product-rating">4.5 Stars (10 reviews)</div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="product">
+                            <img class = "product-image" src="images/d1.jpg" alt="product">
+                            <div class ="product-name"> 
+                                <a href ="product.html">
+                                    Hand-painted "Starry Night"
+                                </a>
+                            </div>
+                            <div class ="product-seller">Josephine R.</div>
+                            <div class ="product-price">20$</div>
+                            <div class ="product-rating">4.5 Stars (10 reviews)</div>
+                        </div>
+                    </li>
+                </ul>
+                </div>
+            </main>
+            <footer class="footer">
+                All rights reserved.
+            </footer>
+            </div>
+            <script>
+                function openMenu(){
+                    document.querySelector(".sidebar").classList.add("open");
+                }
+                function closeMenu(){
+                    document.querySelector(".sidebar").classList.remove("open");
+                }
+            </script>
+        </body>
+
+    </head>
+</html>
