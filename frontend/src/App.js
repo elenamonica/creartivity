@@ -25,8 +25,8 @@ function App() {
             <Link to ="/">CreARTivity</Link>
         </div>
         <div className="header-links">
-            <a href="cart.html">Cart</a>
-            <a href="signin">Sign In</a>
+            <Link to= "/cart">Cart</Link>
+            <Link to = "/signin">Sign In</Link>
         </div>
     </header>
     <aside className ="sidebar">

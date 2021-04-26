@@ -3,7 +3,8 @@ import data from './data';
 import config from './config';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import userRoute from "./routes/userRoutes"
+import userRoute from "./routes/userRoutes";
+import bodyParser from "body-parser";
 
 dotenv.config();
 
@@ -16,8 +17,7 @@ mongoose.connect(mongoDbUrl, {
 
 
 const app = express();
-
-
+app.use(express.json());
 app.use("/api/users", userRoute);
 app.get("/api/products/:id", (req, res) =>{
     const productId = req.params.id;

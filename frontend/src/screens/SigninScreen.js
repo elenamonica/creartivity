@@ -1,34 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { signIn } from '../actions/userActions';
 
 function SigninScreen(props){
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const userSignIn = useSelector(state => state.userSignIn);
+    const {loading, userInfo, error} =  userSignIn;
     const dispatch = useDispatch();
 
     useEffect (() => {
-        
+        if(userInfo){
+            props.history.push("/");
+        }
         return () => {
             //
         };
-    }, []);
+    }, [userInfo]);
 
     const submitHandler = (e) => {
         e.preventDefault();
+        dispatch(signIn(email, password));
     }
 
     return <div className="form">
         <form onSubmit = {submitHandler}>
             <ul className = "form-container">
                 <li>
-                    <label for="email">
+                    <h2>Sign-In</h2>
+                </li>
+                <li>
+                    {loading && <div>Loading...</div>}
+                    {error && <div>{error}</div>}
+                </li>
+                <li>
+                    <label htmlFor="email">
                         Email
                     </label>
                     <input type = "email" name = "email" id = "email" onChange ={(e) => setEmail(e.target.value)}/>
                 </li>
                 <li>
-                    <label for="password">
-                        <input type = "password" id = "password" name = "password" onChange = {(e) => setPassword(e.target.value)}/>
+                    <label htmlFor="password">
+                        Password
                     </label>
+                    <input type = "password" id = "password" name = "password" onChange = {(e) => setPassword(e.target.value)}/>
                 </li>
                 <li>
                     <button type = "submit" className = "button primary">
@@ -39,7 +56,7 @@ function SigninScreen(props){
                     New to CreARTivity? 
                 </li>
                 <li>
-                    <Link to = "/register" class = "button full-width">Create a free account.</Link>
+                    <Link to = "/register" class = "button secondary text-center">Create a free account.</Link>
                 </li>
             </ul>
         </form>
