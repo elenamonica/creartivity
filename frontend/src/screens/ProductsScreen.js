@@ -20,11 +20,14 @@ function ProductsScreen(props){
 
     useEffect (() => 
     {
+        if(successSave){
+            setModalVisible(false);
+        }
         dispatch(listProducts());
         return () => {
             //
         };
-    }, []);
+    }, [successSave]);
 
     const openModal = (product) => {
             setModalVisible(true);
