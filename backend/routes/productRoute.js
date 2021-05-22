@@ -1,26 +1,23 @@
 import express from 'express';
 import Product from '../models/productModel';
-import {getToken} from "../util";
 
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
     const products = await Product.find({});
-    res.send({products});
+    res.send(products);
 });
 
 router.post("/", async (req, res) => {
    const product = new Product({
     name: req.body.name,
     image: req.body.image,
-    brand: req.body.brand,
+    seller: req.body.seller,
     category: req.body.category,
     price: req.body.price,
     countInStock: req.body.countInStock,
-    description: req.body.description,
-    rating: req.body.rating,
-    numReviews: req.body.numReviews
+    description: req.body.description
    });
    const newProduct = await product.save();
    if(newProduct){
@@ -28,5 +25,25 @@ router.post("/", async (req, res) => {
    }
    return res.status(500).send({message: 'Error in creating product.'});
 });
+
+router.put("/:id", async (req, res) => {
+    const productId = req.params.id;
+    const product = await Product.findOne({_id: productId});
+    if(product){
+        
+            product.name =  req.body.name;
+            product.image =  req.body.image;
+            product.seller =  req.body.seller;
+            product.category =  req.body.category;
+            product.price =  req.body.price;
+            product.countInStock =  req.body.countInStock;
+            product.description =  req.body.description;
+            const updatedProduct = await product.save();
+            if(updatedProduct){
+                res.status(201).send({message: 'Product Updated', data: updatedProduct});
+            }
+        }
+    return res.status(500).send({message: 'Error in updating product.'});
+ });
 
 export default router;
