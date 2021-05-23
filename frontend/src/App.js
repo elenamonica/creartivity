@@ -8,6 +8,7 @@ import SigninScreen from "./screens/SigninScreen";
 import { useSelector } from "react-redux";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProductsScreen from "./screens/ProductsScreen";
+import ShippingScreen from "./screens/ShippingScreen";
 
 function App() {
   const userSignIn = useSelector((state) => state.userSignIn);
@@ -63,6 +64,7 @@ function App() {
         <main className="main">
           <div className="content">
             <Route path="/products" component={ProductsScreen}></Route>
+            <Route path="/shipping" component={ShippingScreen}></Route>
             <Route path="/signin" component={SigninScreen}></Route>
             <Route path="/register" component={RegisterScreen}></Route>
             <Route path="/product/:id" component={ProductScreen} />

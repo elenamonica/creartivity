@@ -384,3 +384,22 @@ input{
 tbody>tr:nth-child(odd){
   background-color: bisque;
 }
+
+/* CheckOut steps */
+.checkout-steps{
+  display: flex;
+  justify-content: space-between;
+  width: 40rem;
+  margin: 1rem auto;
+}
+.checkout-steps > div{
+  border-top: .3rem #ac5e30 solid;
+  color: burlywood;
+  font-weight: bold;
+  flex: 1 1;
+  padding-top: 1rem;
+}
+.checkout-steps >div.active{
+  border-top: .3rem #6a65f0 solid;
+  color: #6a65f0;
+}
