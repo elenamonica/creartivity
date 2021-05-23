@@ -4,7 +4,7 @@ import config from './config';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import userRoute from "./routes/userRoutes";
-import productRoute from "./routes/productRoute";
+import productRoute from "./routes/productRoutes";
 
 dotenv.config();
 
