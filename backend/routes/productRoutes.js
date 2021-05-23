@@ -1,5 +1,6 @@
 import express from 'express';
 import Product from '../models/productModel';
+import {isAuth, isAdmin} from '../util';
 
 
 const router = express.Router();
@@ -9,7 +10,18 @@ router.get("/", async (req, res) => {
     res.send(products);
 });
 
-router.post("/", async (req, res) => {
+router.get("/:id", async (req, res) =>{
+        const productId = req.params.id;
+        const product = await Product.findById(productId);
+        if(product){
+            res.send(product);
+        }
+        else {
+            res.status(404).send({msg: "Product not found."})
+        }
+})
+    
+router.post("/", isAuth, isAdmin, async (req, res) => {
    const product = new Product({
     name: req.body.name,
     image: req.body.image,
@@ -26,7 +38,7 @@ router.post("/", async (req, res) => {
    return res.status(500).send({message: 'Error in creating product.'});
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", isAuth, isAdmin, async (req, res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId);
     if(product){
@@ -46,7 +58,7 @@ router.put("/:id", async (req, res) => {
     return res.status(500).send({message: 'Error in updating product.'});
  });
 
- router.delete("/:id", async(req,res) => {
+ router.delete("/:id", isAuth, isAdmin, async(req,res) => {
      const productId = req.params.id;
      const product = await Product.findById(productId);
      if(product) {
@@ -55,7 +67,7 @@ router.put("/:id", async (req, res) => {
              res.status(200).send({message: 'Product Deleted successfully', data: deletedProduct});
          }
      }
-     
+
      return res.status(500).send({message: 'Error in deleting product'});
  });
 
