@@ -1,66 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Route, Link } from "react-router-dom";
-import { saveShipping } from "../actions/cartActions";
+import React, { useState } from "react";
+import { useDispatch} from "react-redux";
+import { savePayment } from "../actions/cartActions";
 import CheckOutSteps from "../components/CheckOutSteps";
 
-function ShippingScreen(props) {
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [postalCode, setPostalCode] = useState("");
+function PaymentScreen(props) {
+  const [paymentMethod, setPaymentMethod] = useState("");
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShipping(address, city, postalCode, country));
-    props.history.push('payment');
+    dispatch(savePayment({paymentMethod}));
+    props.history.push('placeorder');
   };
 
   return <div>
-    <CheckOutSteps step1 step2></CheckOutSteps>
+    <CheckOutSteps step1 step2 step3></CheckOutSteps>
     <div className="form">
       <form onSubmit={submitHandler}>
         <ul className="form-container">
           <li>
-            <h2>Shipping</h2>
+            <h2>Payment Method</h2>
           </li>
-          <li>
-            <label htmlFor="address">Address</label>
-            <input
-              type="text"
-              name="address"
-              id="address"
-              onChange={(e) => setAddress(e.target.value)}
+          <div>
+          <input
+              type="radio"
+              name="paymentMethod"
+              id="paymentMethod"
+              value = "PayPal"
+              onChange={(e) => setPaymentMethod(e.target.value)}
             />
-          </li>
           <li>
-            <label htmlFor="city">City</label>
-            <input
-              type="text"
-              name="city"
-              id="city"
-              onChange={(e) => setCity(e.target.value)}
-            />
+            <label htmlFor="address">PayPal</label>
           </li>
-          <li>
-            <label htmlFor="postalcode">Postal Code</label>
-            <input
-              type="text"
-              name="postalcode"
-              id="postalcode"
-              onChange={(e) => setPostalCode(e.target.value)}
-            />
-          </li>
-          <li>
-            <label htmlFor="country">Country</label>
-            <input
-              type="text"
-              name="country"
-              id="country"
-              onChange={(e) => setCountry(e.target.value)}
-            />
-          </li>
+          </div>
           <li>
             <button type="submit" className="button primary">
               Continue
@@ -71,4 +43,4 @@ function ShippingScreen(props) {
     </div>
   </div>
 }
-export default ShippingScreen;
+export default PaymentScreen;
