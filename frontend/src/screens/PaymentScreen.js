@@ -22,6 +22,7 @@ function PaymentScreen(props) {
             <h2>Payment Method</h2>
           </li>
           <div>
+          <li className ="radio-button">
           <input
               type="radio"
               name="paymentMethod"
@@ -29,7 +30,6 @@ function PaymentScreen(props) {
               value = "PayPal"
               onChange={(e) => setPaymentMethod(e.target.value)}
             />
-          <li>
             <label htmlFor="address">PayPal</label>
           </li>
           </div>

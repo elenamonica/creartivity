@@ -457,3 +457,8 @@ tbody > tr:nth-child(odd) {
   font-weight: bold;
   color:#bb8c36;
 }
+
+.radio-button{
+  display: flex;
+  flex-direction: row !important;
+}
