@@ -1,116 +1,75 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createOrder } from "../actions/orderActions";
-import CheckOutSteps from "../components/CheckOutSteps";
-import { ORDER_CREATE_RESET, ORDER_CREATE_SUCCESS } from "../constants/orderConstants";
+import { detailsOrder } from "../actions/orderActions";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 function OrderScreen(props) {
   const dispatch = useDispatch();
   const orderId = props.match.params.id;
-  if (!shipping.address) {
-    props.history.push("/shipping");
-  }
-  else if (!payment.paymentMethod) {
-    props.history.push("/payment");
-  }
+  const orderDetails = useSelector((state) => state.orderDetails);
+  const { order, loading, error } = orderDetails;
+
   useEffect(() => {
     dispatch(detailsOrder(orderId));
-    }, [dispatch, orderId]);
+  }, [dispatch, orderId]);
 
-  return (
+  return loading ? (
+    <LoadingBox></LoadingBox>
+  ) : error ? (
+    <MessageBox variant="danger">{error}</MessageBox>
+  ) : (
     <div>
-      <CheckOutSteps step1 step2 step3 step4> </CheckOutSteps>
-        <div className="placeorder">
-          <div className="placeorder-info">
+      <h1>Order {order._id}</h1>
+      <div className="placeorder">
+        <div className="placeorder-info">
+          <div>
+            <h3>Shipping</h3>
+            <p>
+              <strong>Address:</strong>
+              {order.shippingAddress.city}, {order.shippingAddress.postalCode},
+              {order.shippingAddress.country}
+            </p>
+            {order.isDelivered? <MessageBox variant="sucess">Delivered at {orderDetails.deliveredAt}</MessageBox> :
+            <MessageBox variant ="danger"> Not Delivered</MessageBox>
+            }
             <div>
-              <h3>Shipping</h3>
-              <div>
-                {cart.shipping.address}, {cart.shipping.city},
-                {cart.shipping.postalCode}, {cart.shipping.country}
-              </div>
-              <div>
-                <h3>Payment</h3>
-                <div>Payment Method: {cart.payment.paymentMethod}</div>
-              </div>
+              <h3>Payment</h3>
+              <p><strong>Payment Method: {order.paymentMethod}</strong></p>
+              {order.isPaid? <MessageBox variant="sucess">Delivered at {orderDetails.paidAt}</MessageBox> :
+            <MessageBox variant ="danger"> Not Paid</MessageBox>
+            }
             </div>
-            <ul className="cart-list-container">
-                <li>
-                  <h3>Shopping Cart</h3>
-                  <div>Price</div>
-                </li>
-                {cartItems.length === 0 ? (
-                  <div>Your cart is empty.</div>
-                ) : (
-                  cartItems.map((item) => (
-                    <li key={item._id}>
-                      <div className="cart-item-container">
-                        <div className="cart-image">
-                          <img src={item.image} alt="product" />
-                        </div>
-                        <div className="cart-name">
-                          <div>
-                            <Link to={"/product/" + item.productId}>
-                              {item.name}
-                            </Link>
-                          </div>
-                          <div>
-                            Qty:
-                            {item.qty}
-                          </div>
-                        </div>
-                        <div className="cart-price">${item.price}</div>
-                      </div>
-                    </li>
-                  ))
-                )}
-             </ul>
           </div>
-      
-        <div className="placeorder-action">
-          <ul>
-            <li>
-              <button onClick={placeOrderHandler} className="button primary full-width"> Place Order</button>
-            </li>
-            <li>
-              <h3>Order Summary</h3>
-            </li>
-            <li>
-              <div>
-                Items
-              </div>
-              <div>
-                ${itemsPrice}
-              </div>
-            </li>
-            <li>
-              <div>
-                Shipping
-              </div>
-              <div>
-                ${shippingPrice}
-              </div>
-            </li>
-            <li>
-              <div>
-                Tax
-              </div>
-              <div>
-                ${taxPrice}
-              </div>
-            </li>
-            <li>
-              <div>
-                Order Total
-              </div>
-              <div>
-                ${totalPrice}
-              </div>
-            </li>
+          <h3>Order items:</h3>
+          <ul className="cart-list-container">
+            {order.orderItems.map((item) => (
+              <li key={item._id}>
+                <div className="cart-item-container">
+                  <div className="cart-image">
+                    <img src={item.image} alt="product" />
+                  </div>
+                  <div className="cart-name">
+                    <div>
+                      <Link to={"/product/" + item.productId}>{item.name}</Link>
+                    </div>
+                    <div>
+                      Qty:
+                      {item.qty}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))}
           </ul>
-         </div>
+          <h3>Total price:</h3>
+          <div className="row">
+            <strong>${order.totalPrice.toFixed(2)}</strong>
+          </div>
         </div>
+      </div>
     </div>
   );
 }
 
-export default PlaceOrderScreen;
+export default OrderScreen;

@@ -16,6 +16,10 @@ orderRouter.post(
         orderItems: req.body.orderItems,
         shippingAddress: req.body.shipping,
         paymentMethod: req.body.payment.paymentMethod,
+        itemsPrice: req.body.itemsPrice,
+        shippingPrice: req.body.shippingPrice,
+        taxPrice: req.body.taxPrice,
+        totalPrice: req.body.totalPrice,
         user: req.user._id,
       });
       const createdOrder = await order.save();
