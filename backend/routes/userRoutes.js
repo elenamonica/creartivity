@@ -1,10 +1,11 @@
 import express from "express";
+import expressAsyncHandler from "express-async-handler";
 import User from "../models/userModel";
-import { getToken } from "../util";
+import { getToken, isAdmin, isAuth } from "../util";
 
 const router = express.Router();
 
-router.get("/createadmin", async (req, res) => {
+router.get("/createadmin", isAuth, isAdmin, async (req, res) => {
   try {
     const user = new User({
       name: "Elena",
@@ -59,5 +60,17 @@ router.post("/register", async (req, res) => {
     res.status(401).send({ msg: "Invalid user data." });
   }
 });
+
+router.get(
+  "/:id",
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(404).send({ message: "User Not Found" });
+    }
+  })
+);
 
 export default router;

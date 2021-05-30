@@ -30,15 +30,25 @@ function OrderScreen(props) {
               {order.shippingAddress.city}, {order.shippingAddress.postalCode},
               {order.shippingAddress.country}
             </p>
-            {order.isDelivered? <MessageBox variant="sucess">Delivered at {orderDetails.deliveredAt}</MessageBox> :
-            <MessageBox variant ="danger"> Not Delivered</MessageBox>
-            }
+            {order.isDelivered ? (
+              <MessageBox variant="sucess">
+                Delivered at {orderDetails.deliveredAt}
+              </MessageBox>
+            ) : (
+              <MessageBox variant="danger"> Not Delivered</MessageBox>
+            )}
             <div>
               <h3>Payment</h3>
-              <p><strong>Payment Method: {order.paymentMethod}</strong></p>
-              {order.isPaid? <MessageBox variant="sucess">Delivered at {orderDetails.paidAt}</MessageBox> :
-            <MessageBox variant ="danger"> Not Paid</MessageBox>
-            }
+              <p>
+                <strong>Payment Method: {order.paymentMethod}</strong>
+              </p>
+              {order.isPaid ? (
+                <MessageBox variant="sucess">
+                  Delivered at {orderDetails.paidAt}
+                </MessageBox>
+              ) : (
+                <MessageBox variant="danger"> Not Paid</MessageBox>
+              )}
             </div>
           </div>
           <h3>Order items:</h3>

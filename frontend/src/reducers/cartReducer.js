@@ -31,7 +31,7 @@ function cartReducer(
     case CART_SAVE_PAYMENT:
       return { ...state, payment: action.payload };
     case CART_EMPTY:
-      return { ...state, cartItems:[] };
+      return { ...state, cartItems: [] };
     default:
       return state;
   }

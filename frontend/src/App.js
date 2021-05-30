@@ -5,17 +5,25 @@ import ProductScreen from "./screens/ProductScreen";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import CartScreen from "./screens/CartScreen";
 import SigninScreen from "./screens/SigninScreen";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProductsScreen from "./screens/ProductsScreen";
 import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import { signout } from "./actions/userActions";
 
 function App() {
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+  const dispatch = useDispatch();
   const userSignIn = useSelector((state) => state.userSignIn);
   const { userInfo } = userSignIn;
+  const signoutHandler = () => {
+    dispatch(signout());
+  };
 
   const openMenu = () => {
     document.querySelector(".sidebar").classList.add("open");
@@ -33,9 +41,29 @@ function App() {
             <Link to="/">CreARTivity</Link>
           </div>
           <div className="header-links">
-            <Link to="/cart">Cart</Link>
-            {userInfo ? (
-              <Link to="/profile"> {userInfo.name} </Link>
+            <Link to="/cart">Cart
+              {cartItems.length > 0 && (
+                <span className="badge">{cartItems.length}</span>
+              )}</Link>
+             {userInfo ? (
+              <div className="dropdown">
+                <Link to="#">
+                  {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/profile">User Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderhistory">Order History</Link>
+                  </li>
+                  <li>
+                    <Link to="#signout" onClick={signoutHandler}>
+                      Sign Out
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             ) : (
               <Link to="/signin">Sign In</Link>
             )}
@@ -67,6 +95,7 @@ function App() {
         <main className="main">
           <div className="content">
             <Route path="/products" component={ProductsScreen}></Route>
+            <Route path="/profile" component={ProfileScreen}></Route>
             <Route path="/order/:id" component={OrderScreen}></Route>
             <Route path="/placeorder" component={PlaceOrderScreen}></Route>
             <Route path="/payment" component={PaymentScreen}></Route>
