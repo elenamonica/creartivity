@@ -14,6 +14,7 @@ import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import { signout } from "./actions/userActions";
+import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -55,8 +56,12 @@ function App() {
                     <Link to="/profile">User Profile</Link>
                   </li>
                   <li>
-                    <Link to="/orderhistory">Order History</Link>
-                  </li>
+                    <Link to="/orderHistory">Order History</Link>
+                  </li>{
+                    userSignIn.userInfo.isAdmin ? 
+                  (<li>
+                    <Link to="/products">Products</Link>
+                  </li>): ""}
                   <li>
                     <Link to="#signout" onClick={signoutHandler}>
                       Sign Out
@@ -104,6 +109,7 @@ function App() {
             <Route path="/register" component={RegisterScreen}></Route>
             <Route path="/product/:id" component={ProductScreen} />
             <Route path="/cart/:id?" component={CartScreen}></Route>
+            <Route path="/orderHistory" component={OrderHistoryScreen}></Route>
             <Route path="/" exact={true} component={HomeScreen} />
           </div>
         </main>

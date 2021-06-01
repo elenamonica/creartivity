@@ -44,7 +44,7 @@ function CartScreen(props) {
                   </div>
                   <div className="cart-name">
                     <div>
-                      <Link to={"/product/" + item.productId}>{item.name}</Link>
+                      <Link to={"/product/" + item.product}>{item.name}</Link>
                     </div>
                     <div>
                       Qty:
@@ -63,7 +63,7 @@ function CartScreen(props) {
                       <button
                         type="button"
                         className="button smaller-button"
-                        onClick={() => removeFromCartHandler(item.productId)}
+                        onClick={() => removeFromCartHandler(item.product)}
                       >
                         Remove
                       </button>
