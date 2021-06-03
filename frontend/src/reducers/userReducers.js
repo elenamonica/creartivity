@@ -9,6 +9,10 @@ import {
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
   USER_SIGN_OUT,
+  USER_UPDATE_PROFILE_FAIL,
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_RESET,
+  USER_UPDATE_PROFILE_SUCCESS,
 } from "../constants/userConstants";
 
 function userSigninReducer(state = {}, action) {
@@ -51,5 +55,19 @@ export const userDetailsReducer = (state = { loading: true }, action) => {
       return state;
   }
 };
+
+export const userUpdateProfileReducer = (state = {}, action) =>{
+  switch(action.type){
+    case USER_UPDATE_PROFILE_REQUEST:
+      return {loading: true};
+    case USER_UPDATE_PROFILE_SUCCESS:
+      return {loading: false, success: true};
+    case USER_UPDATE_PROFILE_FAIL:
+      return {loading: false, error: action.payload}
+    case USER_UPDATE_PROFILE_RESET:
+      return {};
+    default: return state;
+  }
+}
 
 export { userSigninReducer, userRegisterReducer };

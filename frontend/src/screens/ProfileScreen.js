@@ -1,27 +1,51 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { detailsUser } from "../actions/userActions";
+import { detailsUser, updateUserProfile } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { USER_SIGN_OUT } from "../constants/userConstants";
+import { USER_SIGN_OUT, USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
 export default function ProfileScreen() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [confirmPassword, setConfirmPassword] = useState("");
   const userSignIn = useSelector((state) => state.userSignIn);
   const { userInfo } = userSignIn;
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const {
+    success: successUpdate,
+    error: errorUpdate,
+    loading: loadingUpdate,
+  } = userUpdateProfile;
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(detailsUser(userInfo._id));
-  }, [dispatch, userInfo._id]);
+    if (!user) {
+      dispatch({type: USER_UPDATE_PROFILE_RESET});
+      dispatch(detailsUser(userInfo._id));
+    } else {
+      setName(user.name);
+      setEmail(user.email);
+    }
+  }, [dispatch, userInfo._id, user]);
   const submitHandler = (e) => {
     e.preventDefault();
     //dispatch update profile
+    if (password !== confirmPassword) {
+      alert("Password and confirm password are not matching.");
+    } else {
+      dispatch(updateUserProfile({ userId: user._id, name, email, password }));
+    }
   };
   return (
     <div>
       <form className="form" onSubmit={submitHandler}>
-        <div className="form-container profile-form">
+        <div className="profile-form">
+        <div className = "form-container">
           <li>
             <h1>User Profile</h1>{" "}
           </li>
@@ -31,6 +55,9 @@ export default function ProfileScreen() {
             <MessageBox variant="danger"> {error}</MessageBox>
           ) : (
             <>
+            {loadingUpdate && <LoadingBox></LoadingBox>}
+            {errorUpdate && <MessageBox variant = "danger">{errorUpdate}</MessageBox>}
+            {successUpdate && <MessageBox variant = "success">Profile updated succcessfully</MessageBox>}
               <li>
                 <div>
                   <label htmlFor="name">Name</label>
@@ -38,7 +65,8 @@ export default function ProfileScreen() {
                     id="name"
                     type="text"
                     placeholder="Enter name"
-                    value={user.name}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   ></input>
                 </div>
               </li>
@@ -49,7 +77,8 @@ export default function ProfileScreen() {
                     id="email"
                     type="text"
                     placeholder="Enter email"
-                    value={user.email}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   ></input>
                 </div>
               </li>
@@ -59,8 +88,8 @@ export default function ProfileScreen() {
                   <input
                     id="password"
                     type="password"
-                    placeholder="Enter email"
-                    value={user.password}
+                    placeholder="Enter password"
+                    onChange={(e) => setPassword(e.target.value)}
                   ></input>
                 </div>
               </li>
@@ -68,9 +97,10 @@ export default function ProfileScreen() {
                 <div>
                   <label htmlFor="confirmpassword">Confirm Password</label>
                   <input
-                    id="confirmpassword"
+                    id="confirmPassword"
                     type="password"
                     placeholder="Confirm password"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   ></input>
                 </div>
               </li>
@@ -84,6 +114,7 @@ export default function ProfileScreen() {
               </li>
             </>
           )}
+        </div>
         </div>
       </form>
     </div>

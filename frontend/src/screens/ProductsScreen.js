@@ -5,6 +5,7 @@ import {
   saveProduct,
   deleteProduct,
 } from "../actions/productActions";
+import MessageBox from "../components/MessageBox";
 
 function ProductsScreen(props) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -92,6 +93,7 @@ function ProductsScreen(props) {
                 <h2>Create Product</h2>
               </li>
               <li>
+                {successSave && <MessageBox variant = "success">[Product updated succcessfully</MessageBox>}
                 {loadingSave && <div>Loading...</div>}
                 {errorSave && <div>{errorSave}</div>}
               </li>
